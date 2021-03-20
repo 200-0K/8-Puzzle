@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const postCSSPlugin = [
+const postCSSPlugins = [
     require("autoprefixer"),
     require("postcss-import"),
     require("postcss-nested"),
@@ -26,7 +26,7 @@ module.exports = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            postcssOptions: { plugins: postCSSPlugin },
+                            postcssOptions: { plugins: postCSSPlugins },
                         },
                     },
                 ],
