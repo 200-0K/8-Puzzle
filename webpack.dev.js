@@ -18,4 +18,4 @@ const config = {
     },
 };
 
-module.exports = Object.assign(commonConfig, config);
+module.exports = Object.assign({}, commonConfig, config);

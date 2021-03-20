@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const commonConfig = require("./webpack.common");
 const commonPlugins = commonConfig.plugins;
 const commonRules = commonConfig.module.rules;
-commonRules[0].use.unshift(MiniCSSExtractPlugin.loader); // external css;
+commonRules[0].use.unshift(MiniCSSExtractPlugin.loader); // external css
 
 commonRules.push({
     test: /\.js$/i,
@@ -41,4 +41,4 @@ const config = {
     },
 };
 
-module.exports = Object.assign(commonConfig, config);
+module.exports = Object.assign({}, commonConfig, config);
