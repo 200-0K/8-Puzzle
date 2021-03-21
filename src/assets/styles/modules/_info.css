@@ -1,0 +1,21 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 2.68rem;
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        justify-items: left;
+        width: 265px;
+        max-width: 265px;
+        margin-bottom: 1.4rem;
+    }
+
+    &__field {
+        color: var(--gray);
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+}

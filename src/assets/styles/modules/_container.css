@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+    align-items: center;
+
+    &--in-between {
+        display: flex;
+        flex-direction: column;
+        margin: 0 4.68rem;
+    }
+}

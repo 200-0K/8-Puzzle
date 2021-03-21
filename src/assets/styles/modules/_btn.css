@@ -1,0 +1,28 @@
+.btn {
+    padding: .6rem 1.5rem;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: transform 300ms ease;
+    
+    &:active {
+        transform: scale(.989);
+    }
+
+    &--big {
+        padding: .8rem 3rem;
+        font-size: 1.2em;
+    }
+
+    &--round {
+        border-radius: 2.3rem;
+    }
+
+    &--black {
+        background-color: var(--btn-black);
+        color: #fff;
+    }
+}
