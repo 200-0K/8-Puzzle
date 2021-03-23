@@ -36,10 +36,11 @@
             text-align: center;
             cursor: pointer;
             transition: 
-                opacity 200ms ease,
-                filter 100ms ease-in-out,
-                background-color 200ms ease,
-                color 200ms ease-out;
+                filter 200ms ease-in-out,
+                background-color 200ms ease-in-out, 
+                color 200ms ease-in,
+                opacity 200ms ease
+            ;
 
             &--blank {
                 background-color: #000;
@@ -52,7 +53,7 @@
 
             &--swapped {
                 opacity: 0;
-                filter: blur(2px);
+                filter: blur(3px);
             }
         }
 
@@ -64,6 +65,7 @@
 
     &__board {
         position: relative;
+        user-select: none;
 
         &--small {
             .eight-puzzle__icon > .iconify{
