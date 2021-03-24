@@ -1,16 +1,7 @@
 // -----------------------------------------
 // - Blank tile will have the value 0
 // -----------------------------------------
-
-/**
-* Used as a parameter to move eight puzzle tiles using .move method
-*/
-export let direction = {
-   UP: 0,
-   RIGHT: 1,
-   DOWN: 2,
-   LEFT: 3,
-};
+import {classNames, direction} from "./constants";
 
 export default class EightPuzzle {
     /**
@@ -20,7 +11,7 @@ export default class EightPuzzle {
     constructor(tiles, goalTiles) {
         this.tiles = tiles;
         this.goalTiles = goalTiles;
-        this.blankTileIndex = tiles.findIndex(e => e == 0);
+        this.blankTileIndex = tiles.findIndex(e => e == "0");
     }
 
     get outPlacedTiles() {}
@@ -29,22 +20,25 @@ export default class EightPuzzle {
 
     toHTML() {}
 
-    move(direction) {}
+    move(direction) {
+        // TODO
+        // UP    = -3
+        // Down  = +3
+        // Left  = (cell.index+1 % 3) == 0 || 2
+        // Right = (cell.index+1 % 3) == 1 || 2
+    }
 
-    /**
-     * Automatically find initial & goal tiles by class name if parameters not specified
-     * @param {HTMLElement} initTilesHTMLBody
-     *  An html tag with the class "eight-puzzle__body start"
-     * @param {HTMLElement} goalTilesHTMLBody
-     *  An html tag with the class "eight-puzzle__body goal"
-     * 
+    /** Generate New EightPuzzle Object with initTiles&goalTiles as 1DArray
+     * @param {HTMLElement} initTilesHTMLBody Default ".eight-puzzle__body.start"
+     * @param {HTMLElement} goalTilesHTMLBody Default ".eight-puzzle__body.goal"
      * @returns {EightPuzzle} EightPuzzle Object
      */
     static getObjectFromHTML(
-        initTilesHTMLBody = document.querySelector(".eight-puzzle__body.start"), 
-        goalTilesHTMLBody = document.querySelector(".eight-puzzle__body.goal")
+        initTilesHTMLBody = document.querySelector(`.${classNames.TABLE}.start`), 
+        goalTilesHTMLBody = document.querySelector(`.${classNames.TABLE}.goal`)
     ) {
-        //TODO
-        eightPuzzleBoardHTML.querySelectorAll("")
+        const initTiles = Array.from(initTilesHTMLBody.querySelectorAll(`.${classNames.CELL}`)).map(cell => cell.innerText || "0");
+        const goalTiles = Array.from(goalTilesHTMLBody.querySelectorAll(`.${classNames.CELL}`)).map(cell => cell.innerText || "0");
+        return new EightPuzzle(initTiles, goalTiles);
     }
 }

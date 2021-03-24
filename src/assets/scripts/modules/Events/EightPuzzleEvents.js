@@ -1,17 +1,7 @@
-import shuffle from "lodash/shuffle"
-import debounce from "lodash/debounce";
+import shuffle from "lodash/shuffle";
 import throttle from "lodash/throttle";
 import random from "lodash/random";
-
-const classNames = {
-    BOARD: "eight-puzzle__board",
-    TABLE: "eight-puzzle__body",
-    EDITABLE_TABLE: "eight-puzzle__body--editable",
-    CELL: "eight-puzzle__cell",
-    SELECTED_CELL: "eight-puzzle__cell--selected",
-    SWAPPED_CELL: "eight-puzzle__cell--swapped",
-    RANDOMIZER_ICON: "eight-puzzle__icon", 
-}
+import {classNames} from "../constants";
 
 let isEffectRunning   = false; // For swapping effect
 const swapDuration    = 250; // Duration in ms of swapping tiles
@@ -94,7 +84,7 @@ export default class EightPuzzleEvents {
             // and call the callback function
             if (randomizedCells.length <= 0) {
                 clearInterval(inOrderSwap);
-                if(callback instanceof Function) callback();
+                if(callback instanceof Function) setTimeout(callback, swapDuration);
             }
         }, randomizerDelay);
     }
