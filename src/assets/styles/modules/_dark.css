@@ -1,0 +1,51 @@
+:root {
+    --dark--body-color: #181818;
+    --dark--table-color: #ffff00;
+    --dark--tiles-color: #282828;
+    --dark--blank-tile-color: #22c95d;
+}
+
+body.dark {
+    background-color: var(--dark--body-color);
+
+    .header {
+        &__logo h1 {
+            color: #fff;
+        }
+
+        &__nav {
+            .nav__item:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    .eight-puzzle {
+        &__title > p {
+            color: #fff;
+        }
+
+        &__body {
+            background-color: var(--dark--table-color);
+
+            .eight-puzzle__cell {
+                border: 3px solid var(--dark--tiles-color);
+                background-color: #000;
+                color: #fff;
+
+                &--blank {
+                    background-color: var(--dark--blank-tile-color);
+                }
+
+                &--selected {
+                    background-color: var(--dark--table-color);
+                    color: #000;
+                }
+            }
+        }
+
+        &__icon:hover {
+            color: #fff;
+        }
+    }
+}

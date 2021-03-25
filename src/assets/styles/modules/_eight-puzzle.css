@@ -17,6 +17,7 @@
         font-size: 2em; 
         font-weight: 500;
         margin: 0;
+        margin-bottom: .5rem;
         line-height: 40px;
         text-transform: uppercase;
         text-align: center;
@@ -35,11 +36,13 @@
             border: 1px solid #000;
             text-align: center;
             cursor: pointer;
+            background-color: #fff;
             transition: 
                 filter 200ms ease-in-out,
                 background-color 200ms ease-in-out, 
                 color 200ms ease-in,
-                opacity 200ms ease
+                opacity 200ms ease,
+                border 200ms ease-out
             ;
 
             &--blank {

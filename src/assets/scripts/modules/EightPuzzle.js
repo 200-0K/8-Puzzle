@@ -12,13 +12,13 @@ export default class EightPuzzle {
         this.tiles = tiles;
         this.goalTiles = goalTiles;
         this.blankTileIndex = tiles.findIndex(e => e == "0");
+        // this.outPlacedTiles = EightPuzzleSolver.getOutPlacedTiles(tiles, goalTiles)
+        // this.outPlacedTilesDistance = EightPuzzleSolver.getOutPlacedTilesDistance(tiles, goalTiles)
     }
 
-    get outPlacedTiles() {}
-
-    get outPlacedTilesDistance() {}
-
     toHTML() {}
+
+    availableMoves(){}
 
     move(direction) {
         // TODO

@@ -7,9 +7,12 @@
   <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 </head>
 
-<body>
+<body class="dark">
   <header class="header">
     <div class="header__logo">
+      <div class="theme-switch">
+        <span class="iconify moon switched" data-icon="bx-bxs-moon" data-inline="false"></span>
+      </div>
       <h1>8-Puzzle Project</h1>
     </div>
     <div class="header__nav">
@@ -53,11 +56,11 @@
         <div class="info__field">XXX</div>
       </div>
       <div class="info__row">
-        <div class="info__field">Σ Distances Out of Place</div>
+        <div class="info__field">&Sigma; Distances Out of Place</div>
         <div class="info__field">XXX</div>
       </div>
 
-      <button class="btn btn--big btn--black btn--round">Solve</button>
+      <button class="btn btn--big btn--black btn--round solve">Solve</button>
     </div>
 
     <!-- Goal Tiles -->

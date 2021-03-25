@@ -3,8 +3,7 @@ import throttle from "lodash/throttle";
 import random from "lodash/random";
 import {classNames} from "../constants";
 
-let isEffectRunning   = false; // For swapping effect
-const swapDuration    = 250; // Duration in ms of swapping tiles
+const swapDuration    = 200; // Duration in ms of swapping tiles
 const randomizerDelay = 100; // Delay in ms between swapping tiles
 
 export default class EightPuzzleEvents {
@@ -38,9 +37,6 @@ export default class EightPuzzleEvents {
      * @returns {boolean} true if swapped, false otherwise
      */
      swapEvent(ev, table, callback) {
-        // Stop user from selecting a tile when effect/swapping is happening
-        if (isEffectRunning) return false;
-
         const cellElement = ev.target;
 
         // If cellElement not a cell or it is a cell but its parent doesn't have EDITABLE_TABLE class name then remove all selections
@@ -60,8 +56,8 @@ export default class EightPuzzleEvents {
             // callback after swapping tiles
             if (callback instanceof Function) setTimeout(callback, swapDuration);
         } 
-        // If there parents are different then remove all selections
-        else this.selectedCells = [];
+        // If there parents are different then remove previous selection, and add the new one
+        else this.selectedCells = [cellElement];
 
         this.refreshHighlight();
     }
@@ -109,7 +105,6 @@ export default class EightPuzzleEvents {
         // Pre-swap Effect
         src.classList.add(`${classNames.SWAPPED_CELL}`);
         dest.classList.add(`${classNames.SWAPPED_CELL}`);
-        isEffectRunning = true;
 
         setTimeout(() => {
             // Swap values
@@ -121,7 +116,6 @@ export default class EightPuzzleEvents {
             // Post-swap Effect
             src.classList.remove(`${classNames.SWAPPED_CELL}`);
             dest.classList.remove(`${classNames.SWAPPED_CELL}`);
-            isEffectRunning = false;
         }, effectDuration);
     }
 }

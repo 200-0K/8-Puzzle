@@ -2,7 +2,9 @@
 
 @import "base/_global.css";
 
+@import "modules/_dark.css";
 @import "modules/_header.css";
+@import "modules/_theme-switch.css";
 @import "modules/_container.css";
 @import "modules/_box.css";
 @import "modules/_eight-puzzle.css";
