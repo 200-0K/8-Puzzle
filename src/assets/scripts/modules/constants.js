@@ -7,6 +7,7 @@ export const classNames = {
     TABLE_ROW: "eight-puzzle__row",
 
     CELL: "eight-puzzle__cell",
+    BLANK_CELL: "eight-puzzle__cell--blank",
     SELECTED_CELL: "eight-puzzle__cell--selected",
     SWAPPED_CELL: "eight-puzzle__cell--swapped",
 

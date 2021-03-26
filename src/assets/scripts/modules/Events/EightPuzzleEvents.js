@@ -118,4 +118,16 @@ export default class EightPuzzleEvents {
             dest.classList.remove(`${classNames.SWAPPED_CELL}`);
         }, effectDuration);
     }
+
+    // ************ Static ************ //
+
+    /** Randomize all boards by clicking on randomizer icon ;)
+     * @param {Number} num randomize boards num of times
+     */
+    static randomizeBoards(num = 1) {
+        const temp = setInterval(() => {
+            document.querySelectorAll(`.${classNames.RANDOMIZER_ICON}`).forEach(icon => icon.click());
+            if(--num < 1) clearInterval(temp);
+        }, Math.abs(swapDuration - randomizerDelay) * 5 + 10);
+    }
 }
