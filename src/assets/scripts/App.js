@@ -1,13 +1,12 @@
 import "../styles/styles.css";
 
-import ThemeSwitcher from "./modules/Events/ThemeSwitcher";
+import ThemeSwitcher from "./Classes/Events/ThemeSwitcher";
+import {updateMainDetails} from "./HTML";
 
-import EightPuzzle from "./modules/EightPuzzle";
-import EightPuzzleEvents from "./modules/Events/EightPuzzleEvents";
+import EightPuzzle from "./Classes/EightPuzzle";
+import EightPuzzleEvents from "./Classes/Events/EightPuzzleEvents";
 
-import EightPuzzleSolver from "./modules/EightPuzzleSolver";
-
-new EightPuzzleEvents(() => EightPuzzleSolver.updateMainDetails());
+new EightPuzzleEvents(() => updateMainDetails(EightPuzzle.getObjectFromHTML()));
 EightPuzzleEvents.randomizeBoards(2); //TODO: check if there is localstorage, if not then randomize
 
 new ThemeSwitcher();

@@ -1,7 +1,10 @@
 import shuffle from "lodash/shuffle";
 import throttle from "lodash/throttle";
 import random from "lodash/random";
-import {classNames} from "../constants";
+import {classNames} from "../../constants";
+
+// Solvers
+import BreadthFirst from "../Solvers/BreadthFirst";
 
 const swapDuration    = 200; // Duration in ms of swapping tiles
 const randomizerDelay = 100; // Delay in ms between swapping tiles
@@ -9,6 +12,12 @@ const randomizerDelay = 100; // Delay in ms between swapping tiles
 export default class EightPuzzleEvents {
     constructor(onChangeCallBack) {
         this.selectedCells = [];
+
+        // solvers are objects that can solve EightPuzzle, and it 
+        // contain a method called solve(startEightPuzzle) : Array(EightPuzzle) ~ Visited Eight puzzles
+        this.solvers = [
+            new BreadthFirst()
+        ]
 
         // Used when tiles are changed
         this.onChangeCallBack = onChangeCallBack;
@@ -26,6 +35,9 @@ export default class EightPuzzleEvents {
         document.querySelectorAll(`.${classNames.RANDOMIZER_ICON}`).forEach(icon => icon.addEventListener("click", throttle(ev => {
             this.randomizerEvent(ev, this.onChangeCallBack);
         }, Math.abs(swapDuration - randomizerDelay) * 5)));
+
+
+        document.querySelector(".info .solve").addEventListener("click", this.solveEvent.bind(this));
     }
 
     // ************ Events ************ //
@@ -36,7 +48,7 @@ export default class EightPuzzleEvents {
      * @param {Function} callback Called after tiles are swapped
      * @returns {boolean} true if swapped, false otherwise
      */
-     swapEvent(ev, table, callback) {
+    swapEvent(ev, table, callback) {
         const cellElement = ev.target;
 
         // If cellElement not a cell or it is a cell but its parent doesn't have EDITABLE_TABLE class name then remove all selections
@@ -85,6 +97,12 @@ export default class EightPuzzleEvents {
         }, randomizerDelay);
     }
 
+    solveEvent() {
+        //TODO
+        // for solver of solvers
+        //  this.showResult(solver.solve());
+    }
+
     // ************ Methods ************ //
 
     refreshHighlight() {
@@ -128,6 +146,6 @@ export default class EightPuzzleEvents {
         const temp = setInterval(() => {
             document.querySelectorAll(`.${classNames.RANDOMIZER_ICON}`).forEach(icon => icon.click());
             if(--num < 1) clearInterval(temp);
-        }, Math.abs(swapDuration - randomizerDelay) * 5 + 10);
+        }, Math.abs(swapDuration - randomizerDelay) * 5.1);
     }
 }

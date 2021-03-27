@@ -5,6 +5,10 @@ export default class BreadthFirst {
 
     }
 
+    solve(startEightPuzzle) {
+        
+    }
+
     /**
      * @param {Array} tiles 
      * @param {Number} src 

@@ -15,6 +15,15 @@
             font-weight: bold;
             margin: 0;
             cursor: pointer;
+            transition: opacity 300ms ease-in-out;
+
+            &.dim {
+                opacity: 0.8;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
 
         & :not(:first-child) {

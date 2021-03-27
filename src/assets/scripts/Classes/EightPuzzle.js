@@ -1,8 +1,8 @@
 // -----------------------------------------
 // - Blank tile will have the value 0
 // -----------------------------------------
-import {classNames, direction} from "./constants";
-import EightPuzzleSolver from "./EightPuzzleSolver";
+import {classNames, direction} from "../constants";
+import BreadthFirst from "./Solvers/BreadthFirst";
 
 export default class EightPuzzle {
     /**
@@ -13,8 +13,8 @@ export default class EightPuzzle {
         this.tiles = tiles;
         this.goalTiles = goalTiles;
         this.blankTileIndex = tiles.findIndex(e => e == "0");
-        this.tilesOutPlaced = EightPuzzleSolver.getTilesOutPlaced(this)
-        this.tilesOutPlacedDistance = EightPuzzleSolver.getTilesOutPlacedDistance(this)
+        this.tilesOutPlaced = this.getTilesOutPlaced()
+        this.tilesOutPlacedDistance = this.getTilesOutPlacedDistance()
     }
 
     move(index) {
@@ -26,6 +26,30 @@ export default class EightPuzzle {
         // Down  = +3
         // Left  = (cell.index+1 % 3) == 0 || 2
         // Right = (cell.index+1 % 3) == 1 || 2
+    }
+
+    /**
+     * @returns {Number} Number of tiles out of place
+     */
+     getTilesOutPlaced() {
+        let numberOfTilesOutPlaced = 0;
+        this.tiles.forEach((el, i) => {
+            if(el !== "0" && el !== this.goalTiles[i]) numberOfTilesOutPlaced++;
+        });
+        return numberOfTilesOutPlaced;
+    }
+
+    /**
+     * @returns {Number} Total distance of tiles out of place
+     */
+    getTilesOutPlacedDistance() {
+        let totalDistance = 0;
+        this.tiles.forEach((el, i) => {
+            if (el === "0" || el === this.goalTiles[i]) return;
+            const dest = this.goalTiles.findIndex(tile => tile === el);
+            totalDistance += BreadthFirst.eightPuzzleShortestPath(this.tiles, i, dest);
+        });
+        return totalDistance;
     }
 
 
@@ -45,25 +69,6 @@ export default class EightPuzzle {
         return new EightPuzzle(initTiles, goalTiles);
     }
 
-    /** Get HTML table as eight puzzle board
-     * @param {Array} tiles Cells/Tiles position
-     * @returns {HTMLElement} HTML table contains cells from provided tiles array 
-     */
-    static getHTMLTableFromArray(tiles) {
-        //TODO
-        // spread tiles cells into 3 rows 
-        // add class eight-puzzle__cell
-        // add class eight-puzzle__cell--blank
-        // return table
-    }
-
-    /** Update current start&goal board with the one provided
-     * @param {EightPuzzle} newEightPuzzle 
-     */
-    static updateHTML(newEightPuzzle) {
-        //TODO
-    }
-
     /** Get available moves for some tile position
      * @param {Array} tiles
      * @param {Number} src Index of moving tile
@@ -78,6 +83,7 @@ export default class EightPuzzle {
         if (src - 3 >= 0) newMoves.push({direction: direction.UP, index: src-3});
 
         const horiz = (src+1) % 3;
+        
         // Right?
         if (horiz == 1 || horiz == 2) newMoves.push({direction: direction.RIGHT, index: src+1});
         // Left?
