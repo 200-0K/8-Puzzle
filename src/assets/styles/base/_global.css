@@ -3,6 +3,9 @@
 :root {
     /* Colors */
     --gray: #838383;
+    --primary-green: #22c95d;
+    --primary-red: #cd002f;
+    --primary-yellow: #ffff00;
 }
 
 body {

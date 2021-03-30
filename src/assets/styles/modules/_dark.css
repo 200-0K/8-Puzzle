@@ -1,8 +1,8 @@
 :root {
     --dark--body-color: #181818;
-    --dark--table-color: #ffff00;
+    --dark--table-color: var(--primary-yellow);
     --dark--tiles-color: #282828;
-    --dark--blank-tile-color: #22c95d;
+    --dark--blank-tile-color: var(--primary-green);
 }
 
 body.dark {
@@ -46,6 +46,24 @@ body.dark {
 
         &__icon:hover {
             color: #fff;
+        }
+    }
+
+    .result {
+        h1 {
+            color: #fff;
+        }
+
+        h2 {
+            color: #fff;
+        }
+
+        & .algorithm__line__info-box--timelapse {
+            border-right-color: var(--primary-yellow);
+
+            & p {
+                color: var(--primary-yellow);
+            }
         }
     }
 }

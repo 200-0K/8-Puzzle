@@ -2,20 +2,52 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: flex-end;
     margin: 0 2.68rem;
+    padding-bottom: 4.6vh;
 
     &__row {
         display: grid;
         grid-template-columns: 1fr auto;
         justify-items: left;
+        align-items: center;
         width: 265px;
         max-width: 265px;
         margin-bottom: 1.4rem;
+
+        &:last-of-type {
+            margin-bottom: 0.8rem;
+        }
+
+        &--center {
+            grid-template-columns: 1fr;
+            justify-items: center;
+            column-gap: 2rem;
+        }
     }
 
     &__field {
         color: var(--gray);
         font-weight: 500;
         font-size: 0.9em;
+
+        &.status {
+            font-size: 0.7em;
+            font-weight: 500;
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.3rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        &.solvable {
+            background-color: var(--primary-green);
+            color: #000;
+        }
+
+        &.unsolvable {
+            background-color: var(--primary-red);
+            color: #fff;
+        }
     }
 }

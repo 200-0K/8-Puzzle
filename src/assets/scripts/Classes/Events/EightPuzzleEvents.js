@@ -5,9 +5,14 @@ import {classNames} from "../../constants";
 
 // Solvers
 import BreadthFirst from "../Solvers/BreadthFirst";
+import BestFirst from "../Solvers/BestFirst";
+import EightPuzzle from "../EightPuzzle";
+import { ResultBuilder } from "../../HTML";
 
 const swapDuration    = 200; // Duration in ms of swapping tiles
 const randomizerDelay = 100; // Delay in ms between swapping tiles
+
+const maxNumberOfResults = 50;
 
 export default class EightPuzzleEvents {
     constructor(onChangeCallBack) {
@@ -92,15 +97,57 @@ export default class EightPuzzleEvents {
             // and call the callback function
             if (randomizedCells.length <= 0) {
                 clearInterval(inOrderSwap);
-                if(callback instanceof Function) setTimeout(callback, swapDuration);
+                if (callback instanceof Function) setTimeout(callback, swapDuration);
             }
         }, randomizerDelay);
     }
 
     solveEvent() {
-        //TODO
-        // for solver of solvers
-        //  this.showResult(solver.solve());
+        const currentEightPuzzle = EightPuzzle.getObjectFromHTML();
+        if (!currentEightPuzzle.isSolvable()) {
+            alert("Unsolvable Puzzle!");
+            return;
+        }
+        
+        const resultBuild = new ResultBuilder();
+        for(const solver of this.solvers) {
+            const solverResult = solver.solve(currentEightPuzzle);
+            const totalDepth   = solverResult.visited.length;
+
+            const timeline = resultBuild.addAlgorithmBlock(solverResult.algorithmName, totalDepth-1, solverResult.totalCost.distance);
+
+            timeline.addBoard(solverResult.visited[0].tiles);
+
+            if (totalDepth > maxNumberOfResults + 50) {
+                for (let i = 1; i < Math.floor(maxNumberOfResults/2); i++) {
+                    const visited = solverResult.visited[i];
+                    const cost = visited.tilesOutPlacedDistance;
+                    timeline.addMoveDetails(visited.direction, cost, i);
+                    timeline.addBoard(visited.tiles);
+                }
+
+                timeline.addTimeLapse(totalDepth - maxNumberOfResults);
+
+                for (let i = totalDepth - Math.floor(maxNumberOfResults/2) - 1; i < totalDepth; i++) {
+                    const visited = solverResult.visited[i];
+                    const cost = visited.tilesOutPlacedDistance;
+                    timeline.addMoveDetails(visited.direction, cost, i);
+                    timeline.addBoard(visited.tiles);
+                }
+
+            } else {
+                for (let i = 1; i < totalDepth; i++) {
+                    const visited = solverResult.visited[i];
+                    const cost = visited.tilesOutPlacedDistance;
+                    timeline.addMoveDetails(visited.direction, cost, i);
+                    timeline.addBoard(visited.tiles);
+                }
+            }
+        }
+        
+        const replaceWith = document.querySelector(".result");
+        if (replaceWith) replaceWith.replaceWith(resultBuild.getResult());
+        else document.querySelector("main").insertAdjacentElement("afterend", resultBuild.getResult());   
     }
 
     // ************ Methods ************ //
