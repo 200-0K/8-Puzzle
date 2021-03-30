@@ -9,19 +9,26 @@ export class ResultBuilder {
         this.algorithmBlocks = [];
     }
 
-    addAlgorithmBlock(algorithmName, maxDepth, totalCost) {
+    addAlgorithmBlock(algorithmName, maxDepth, timeTakenInms, totalMoves) {
         const algorithmBlock = document.createElement("section");
         algorithmBlock.classList.add("algorithm");
         algorithmBlock.insertAdjacentHTML("afterbegin", `
             <div class="${classNames.ALGORITHM_SUMMARY}">
-                <div class="${classNames.ALGORITHM_FIELD}">
-                    <p>Max Depth</p>
-                    <p>${maxDepth}</p>
+                <div class="${classNames.FLEX_COLUMN}">
+                    <div class="${classNames.ALGORITHM_FIELD}">
+                        <p>Max Depth</p>
+                        <p>${maxDepth}</p>
+                    </div>
+
+                    <div class="${classNames.ALGORITHM_FIELD}">
+                        <p>Total Moves</p>
+                        <p>${totalMoves}</p>
+                    </div>
                 </div>
 
-                <div class="${classNames.ALGORITHM_FIELD}">
-                    <p >Total Cost</p>
-                    <p>${totalCost}</p>
+                <div class="${classNames.ALGORITHM_FIELD}" style="align-self: flex-end;">
+                    <p >Time Taken</p>
+                    <p>${Math.floor((timeTakenInms/1000) * 10) / 10}<span title="Millisecond" class="unit dim-hover">s</span></p>
                 </div>
             </div>
             <h2 class="${classNames.ALGORITHM_TITLE}">${algorithmName} Algorithm</h2>
@@ -43,7 +50,7 @@ export class ResultBuilder {
         this.algorithmBlocks.push(algorithmBlock);
         return {
             timelineBlock,
-            addMoveDetails: function(direction, cost, depth) {
+            addMoveDetails: function(direction, tilesOutPlaced, tilesOutPlacedDistance, totalTilesOutPlaced, totalTilesOutPlacedDistance, depth) {
                 this.timelineBlock.insertAdjacentHTML("beforeend", `
                     <div class="${classNames.ALGORITHM_LINE}">
                         <div class="${classNames.ALGORITHM_INFO_BOX}">
@@ -53,7 +60,11 @@ export class ResultBuilder {
                             </div>
                             <div class="${classNames.ALGORITHM_FIELD}">
                                 <p>Cost</p>
-                                <p>${cost}</p>
+                                <p><span class="dim-hover" title="Tiles Out of Place">${tilesOutPlaced}</span> | <span class="dim-hover" title="&Sigma; Distances Out of Place">${tilesOutPlacedDistance}</span></p>
+                            </div>
+                            <div class="${classNames.ALGORITHM_FIELD}">
+                                <p>Total Cost</p>
+                                <p><span class="dim-hover" title="Tiles Out of Place">${totalTilesOutPlaced}</span> | <span class="dim-hover" title="&Sigma; Distances Out of Place">${totalTilesOutPlacedDistance}</span></p>
                             </div>
                             <div class="${classNames.ALGORITHM_FIELD}">
                                 <p>Depth</p>
@@ -131,10 +142,21 @@ function getHTMLTableFromArray(tiles) {
 // ************ Update ************ //
 
 /** Update current start&goal board with the one provided
- * @param {EightPuzzle} newEightPuzzle 
+ * @param {Array} tiles 
+ * @param {Array} goalTiles
  */
-function updateBoards(newEightPuzzle) {
-    //TODO
+export function updateBoards(tiles, goalTiles) {
+    const startBoard    = document.querySelector(`.${classNames.TABLE}.start`);
+    const goalBoard     = document.querySelector(`.${classNames.TABLE}.goal`);
+
+    const newStartBoard = getHTMLTableFromArray(tiles);
+    const newGoalBoard  = getHTMLTableFromArray(goalTiles);
+
+    newStartBoard.className = startBoard.className;
+    newGoalBoard.className  = goalBoard.className;
+
+    startBoard.replaceWith(newStartBoard);
+    goalBoard.replaceWith(newGoalBoard);
 }
 
 /** Update number of tiles out of place and it's total distance 

@@ -1,6 +1,7 @@
 @import "normalize.css";
 
 @import "base/_global.css";
+@import "base/_generic.css";
 
 @import "modules/_dark.css";
 @import "modules/_header.css";

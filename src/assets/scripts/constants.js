@@ -25,7 +25,10 @@ export const classNames = {
     ALGORITHM_LINE: "algorithm__line",
     ALGORITHM_FIRST_TIMELINE: "algorithm__line--top",
     ALGORITHM_TOP_TEXT: "top-text",
-    ALGORITHM_INFO_BOX: "algorithm__line__info-box"
+    ALGORITHM_INFO_BOX: "algorithm__line__info-box",
+
+
+    FLEX_COLUMN: "flex-column"
 };
 
 

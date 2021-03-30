@@ -4,42 +4,42 @@ import EightPuzzle from "../EightPuzzle";
 export default class BreadthFirst {
     /**
      * @param {EightPuzzle} startEightPuzzle 
-     * @return {{algorithmName, totalCost: {outPlaced, distance}, visited: [EightPuzzle]}}
+     * @return {{algorithmName: String, timeTaken: Number, totalMoves: Number, visited: [EightPuzzle]}}
      */
     solve(startEightPuzzle) {
         const result = {
             algorithmName: "Breadth First",
-            totalCost: {
-                outPlaced: 0,
-                distance: 0
-            },
+            timeTaken: Date.now(),
+            totalMoves: 0,
             visited: []
         };
 
-        let time = Date.now();
-        const visited = result.visited;
-
+        const goalHash    = window.btoa(startEightPuzzle.goalTiles);
         const queue       = [startEightPuzzle];
         const visitedHash = [];
         let cur;
         while (cur = queue.shift()) {
-            // result.totalCost.outPlaced += cur.tilesOutPlaced;
-            result.totalCost.distance  += cur.tilesOutPlacedDistance;
+            const curHash = window.btoa(cur.tiles);
 
-            visited.push(cur);
-            visitedHash.push(window.btoa(cur.tiles));
-            if (window.btoa(cur.tiles) === window.btoa(cur.goalTiles)) break;
+            result.totalMoves++;
+            visitedHash.push(curHash);
+            if (curHash === goalHash) {
+                result.visited.unshift(cur);
+                while(cur = cur.parent) result.visited.unshift(cur);
+                break;
+            }
 
             // Available indexes for blank tile
             const indxs = EightPuzzle.availableMoves(cur.tiles, cur.blankTileIndex);
 
             for(const {index, direction} of indxs) {
-                const move = cur.move(index, direction, visitedHash);
-                if (move) queue.unshift(move);
+                const move = cur.move(index, direction);
+                if (visitedHash[window.btoa(move)]) continue;
+                queue.push(move);
             }
         }
 
-        console.log("Time taken", (Date.now()-time),"ms"); //!
+        result.timeTaken = Date.now() - result.timeTaken;
         return result;
     }
 

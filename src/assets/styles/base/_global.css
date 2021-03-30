@@ -6,6 +6,7 @@
     --primary-green: #22c95d;
     --primary-red: #cd002f;
     --primary-yellow: #ffff00;
+    --primary-purple: #e134e1;
 }
 
 body {
@@ -14,8 +15,4 @@ body {
 
 * {
     box-sizing: border-box;
-}
-
-.disabled {
-    pointer-events: none;
 }

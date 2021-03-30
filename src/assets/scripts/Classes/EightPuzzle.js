@@ -9,13 +9,14 @@ export default class EightPuzzle {
      *  @param {Array} tiles
      *  @param {Array} goalTiles
      */
-    constructor(tiles, goalTiles, blankTilePosition, direction) {
+    constructor(tiles, goalTiles, blankTilePosition, direction, parent) {
         this.tiles = tiles;
         this.goalTiles = goalTiles;
         this.blankTileIndex = blankTilePosition ?? tiles.findIndex(e => e == "0");
         // this.tilesOutPlaced = this.getTilesOutPlaced();
         // this.tilesOutPlacedDistance = this.getTilesOutPlacedDistance();
         this.direction = direction;
+        this.parent = parent;
     }
 
     /** Move/swap blank tile with any other tile by index
@@ -24,19 +25,17 @@ export default class EightPuzzle {
      * @param {direction} direction Provide direction based on direction enum inside constants.js
      * @returns {EightPuzzle} newEightPuzzle
      */
-    move(index, direction, visitedHash) {
+    move(index, direction) {
         if (index > this.tiles.length || index < 0) throw new Error("Move is not allowed");
         
         // Copy previous board
         const newBoard = [...this.tiles];
         // Swap tiles
         [newBoard[this.blankTileIndex], newBoard[index]] = [newBoard[index], newBoard[this.blankTileIndex]];
-        if (visitedHash?.includes(window.btoa(newBoard))) return false;
-
         // Convert direction enum to letters
         direction = (direction === _direction.UP) ? "Up" : (direction === _direction.DOWN) ? "Down" : (direction === _direction.LEFT) ? "Left" : (direction === _direction.RIGHT) ? "Right" : direction;
         
-        return new EightPuzzle(newBoard, this.goalTiles, index, direction);
+        return new EightPuzzle(newBoard, this.goalTiles, index, direction, this);
     }
 
     /**
@@ -80,7 +79,7 @@ export default class EightPuzzle {
             for (let j = i; j < goalTiles.length; j++) 
                 if(goalTiles[j] > goalTiles[i]) goalInv++;
         }
-        
+
         startInv %= 2;
         goalInv  %= 2;
         return startInv === goalInv;
@@ -113,12 +112,12 @@ export default class EightPuzzle {
 
         // Up?
         if (src - 3 >= 0) newMoves.push({direction: _direction.UP, index: src-3});
-        // Right?
-        if (horiz == 1 || horiz == 2) newMoves.push({direction: _direction.RIGHT, index: src+1});
         // Down?
         if (src + 3 < tiles.length) newMoves.push({direction: _direction.DOWN, index: src+3});
         // Left?
         if (horiz == 0 || horiz == 2) newMoves.push({direction: _direction.LEFT, index: src-1});
+        // Right?
+        if (horiz == 1 || horiz == 2) newMoves.push({direction: _direction.RIGHT, index: src+1});
 
         return newMoves;
     }

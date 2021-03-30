@@ -102,52 +102,45 @@ export default class EightPuzzleEvents {
         }, randomizerDelay);
     }
 
+    /* When solve button pressed */
     solveEvent() {
         const currentEightPuzzle = EightPuzzle.getObjectFromHTML();
+
+        // Save current boards
+        localStorage.setItem("tiles", JSON.stringify(currentEightPuzzle.tiles));
+        localStorage.setItem("goal-tiles", JSON.stringify(currentEightPuzzle.goalTiles));
+
+        // Check if it solvable
         if (!currentEightPuzzle.isSolvable()) {
             alert("Unsolvable Puzzle!");
             return;
         }
         
-        const resultBuild = new ResultBuilder();
+        
+        const resultBuilder = new ResultBuilder();
         for(const solver of this.solvers) {
-            const solverResult = solver.solve(currentEightPuzzle);
-            const totalDepth   = solverResult.visited.length;
+            const solverResult              = solver.solve(currentEightPuzzle);
+            const totalDepth                = solverResult.visited.length;
+            let totalTilesOutPlaced         = 0;
+            let totalTilesOutPlacedDistance = 0;
 
-            const timeline = resultBuild.addAlgorithmBlock(solverResult.algorithmName, totalDepth-1, solverResult.totalCost.distance);
+            const timeline = resultBuilder.addAlgorithmBlock(solverResult.algorithmName, totalDepth, solverResult.timeTaken, solverResult.totalMoves);
 
             timeline.addBoard(solverResult.visited[0].tiles);
 
-            if (totalDepth > maxNumberOfResults + 50) {
-                for (let i = 1; i < Math.floor(maxNumberOfResults/2); i++) {
-                    const visited = solverResult.visited[i];
-                    const cost = visited.tilesOutPlacedDistance;
-                    timeline.addMoveDetails(visited.direction, cost, i);
-                    timeline.addBoard(visited.tiles);
-                }
-
-                timeline.addTimeLapse(totalDepth - maxNumberOfResults);
-
-                for (let i = totalDepth - Math.floor(maxNumberOfResults/2) - 1; i < totalDepth; i++) {
-                    const visited = solverResult.visited[i];
-                    const cost = visited.tilesOutPlacedDistance;
-                    timeline.addMoveDetails(visited.direction, cost, i);
-                    timeline.addBoard(visited.tiles);
-                }
-
-            } else {
-                for (let i = 1; i < totalDepth; i++) {
-                    const visited = solverResult.visited[i];
-                    const cost = visited.tilesOutPlacedDistance;
-                    timeline.addMoveDetails(visited.direction, cost, i);
-                    timeline.addBoard(visited.tiles);
-                }
+            for (let i = 1; i < totalDepth; i++) {
+                const visited                = solverResult.visited[i];
+                const tilesOutPlaced         = visited.tilesOutPlaced;
+                const tilesOutPlacedDistance = visited.tilesOutPlacedDistance;
+                totalTilesOutPlaced         += tilesOutPlaced;
+                totalTilesOutPlacedDistance += tilesOutPlacedDistance;
+                
+                timeline.addMoveDetails(visited.direction, tilesOutPlaced, tilesOutPlacedDistance, totalTilesOutPlaced, totalTilesOutPlacedDistance, i+1);
+                timeline.addBoard(visited.tiles);
             }
         }
         
-        const replaceWith = document.querySelector(".result");
-        if (replaceWith) replaceWith.replaceWith(resultBuild.getResult());
-        else document.querySelector("main").insertAdjacentElement("afterend", resultBuild.getResult());   
+        this.showResult(resultBuilder);
     }
 
     // ************ Methods ************ //
@@ -182,6 +175,14 @@ export default class EightPuzzleEvents {
             src.classList.remove(`${classNames.SWAPPED_CELL}`);
             dest.classList.remove(`${classNames.SWAPPED_CELL}`);
         }, effectDuration);
+    }
+
+    /** Remove tag with .result class if existed and then append new result after the end of </main> tag
+     * @param {ResultBuilder} resultBuilder 
+     */
+    showResult(resultBuilder) {
+        document.querySelector(".result")?.remove();
+        document.querySelector("main").insertAdjacentElement("afterend", resultBuilder.getResult());  
     }
 
     // ************ Static ************ //
