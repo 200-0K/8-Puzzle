@@ -1,10 +1,15 @@
 @import "normalize.css";
 
 @import "base/_global.css";
+@import "base/_generic.css";
 
+@import "modules/_dark.css";
 @import "modules/_header.css";
+@import "modules/_theme-switch.css";
 @import "modules/_container.css";
 @import "modules/_box.css";
 @import "modules/_eight-puzzle.css";
 @import "modules/_info.css";
 @import "modules/_btn.css";
+@import "modules/_result.css";
+@import "modules/_loading-message.css";

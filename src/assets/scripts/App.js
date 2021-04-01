@@ -1,6 +1,16 @@
 import "../styles/styles.css";
 
-import EightPuzzle, { direction } from "./modules/EightPuzzle";
-import EightPuzzleEvents from "./modules/Events/EightPuzzleEvents";
+import ThemeSwitcher from "./Classes/Events/ThemeSwitcher";
+import {updateMainDetails, ResultBuilder, updateBoards} from "./HTML";
 
-new EightPuzzleEvents();
+import EightPuzzle from "./Classes/EightPuzzle";
+import EightPuzzleEvents from "./Classes/Events/EightPuzzleEvents";
+
+if (localStorage.getItem("tiles")) {
+    updateBoards(JSON.parse(localStorage.getItem("tiles")), JSON.parse(localStorage.getItem("goal-tiles")));
+    updateMainDetails(EightPuzzle.getObjectFromHTML());
+} else EightPuzzleEvents.randomizeBoards(2);
+
+new EightPuzzleEvents(() => updateMainDetails(EightPuzzle.getObjectFromHTML()));
+
+new ThemeSwitcher();

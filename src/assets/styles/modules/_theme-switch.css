@@ -1,0 +1,43 @@
+.theme-switch {
+    position: relative;
+    animation: wave 1250ms ease-in-out infinite alternate;
+    top: 0;
+    visibility: visible;
+    transition: 
+        top 340ms ease-in-out,
+        visibility 200ms ease
+    ;
+
+    &.switching {
+        top: -250%;
+        visibility: hidden;
+    }
+
+    & > svg {
+        width: 2ch;
+        height: 2ch;
+        cursor: pointer;
+        transition: color 400ms ease-in-out;
+    }
+
+    & .moon {
+        color: #fd0;
+        stroke: #1f263b;
+        filter: drop-shadow(0px 0px 18px rgba(255, 255, 255, 0.4));
+    }
+
+    & .sun {
+        color: #ff9842;
+        filter: drop-shadow(0 0 15px #ffff00);
+    }
+
+    @keyframes wave {
+        from {
+            transform: translateY(-10%);
+        }
+
+        to {
+            transform: translateY(10%);
+        }
+    }
+}

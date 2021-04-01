@@ -6,10 +6,19 @@
     border: none;
     outline: none;
     cursor: pointer;
-    transition: transform 300ms ease;
+    opacity: .8;
+    transition: 
+        transform 300ms ease, 
+        opacity 300ms ease-in-out,
+        filter 400ms ease-in
+    ;
     
     &:active {
         transform: scale(.989);
+    }
+
+    &:hover {
+        opacity: 1;
     }
 
     &--big {
@@ -22,7 +31,7 @@
     }
 
     &--black {
-        background-color: var(--btn-black);
+        background-color: #00000073;
         color: #fff;
     }
 }

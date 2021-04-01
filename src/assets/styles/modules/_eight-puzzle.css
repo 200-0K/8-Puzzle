@@ -1,6 +1,6 @@
 :root {
     /* Scale */
-    --eight-puzzle-scale-small: 0.5;
+    --eight-puzzle-scale-small: 0.8;
 
     /* Sizes */
     --eight-puzzle-cell-size: 73.5px;
@@ -17,6 +17,7 @@
         font-size: 2em; 
         font-weight: 500;
         margin: 0;
+        margin-bottom: .5rem;
         line-height: 40px;
         text-transform: uppercase;
         text-align: center;
@@ -34,12 +35,13 @@
             font-size: var(--eight-puzzle-cell-font-size); 
             border: 1px solid #000;
             text-align: center;
-            cursor: pointer;
+            background-color: #fff;
             transition: 
                 filter 200ms ease-in-out,
                 background-color 200ms ease-in-out, 
                 color 200ms ease-in,
-                opacity 200ms ease
+                opacity 200ms ease,
+                border 200ms ease-out
             ;
 
             &--blank {
@@ -57,9 +59,26 @@
             }
         }
 
-        &--editable .eight-puzzle__cell:hover {
-            background-color: var(--gray);
-            color: #fff;
+        &--editable {
+
+            .eight-puzzle__cell {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--gray);
+                    color: #fff;
+                }
+            }
+
+        }
+
+        &--small {
+            .eight-puzzle__cell {
+                padding: calc(1.4rem * var(--eight-puzzle-scale-small));
+                height: calc(var(--eight-puzzle-cell-size) * var(--eight-puzzle-scale-small));
+                width: calc(var(--eight-puzzle-cell-size) * var(--eight-puzzle-scale-small));
+                font-size: calc(var(--eight-puzzle-cell-font-size) * var(--eight-puzzle-scale-small));
+            }
         }
     }
 
@@ -71,13 +90,6 @@
             .eight-puzzle__icon > .iconify{
                 width: calc(var(--eight-puzzle-icon-size) * var(--eight-puzzle-scale-small));
                 height: calc(var(--eight-puzzle-icon-size) * var(--eight-puzzle-scale-small));
-            }
-
-            .eight-puzzle__cell {
-                padding: calc(1.4rem * var(--eight-puzzle-scale-small));
-                height: calc(var(--eight-puzzle-cell-size) * var(--eight-puzzle-scale-small));
-                width: calc(var(--eight-puzzle-cell-size) * var(--eight-puzzle-scale-small));
-                font-size: calc(var(--eight-puzzle-cell-font-size) * var(--eight-puzzle-scale-small));
             }
         }
     }
