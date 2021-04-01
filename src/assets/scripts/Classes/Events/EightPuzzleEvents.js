@@ -156,6 +156,7 @@ export default class EightPuzzleEvents {
             timeline.addBoard(visited.tiles);
         }
 
+        timeline.updateBlockAlgorithmTotalCost(totalTilesOutPlaced, totalTilesOutPlacedDistance);
         this.showResult(resultBuilder);
         this.smartEnableMainContainer();
     }

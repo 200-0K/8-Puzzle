@@ -31,11 +31,12 @@ export default class BestFirst {
 
                 // Mark current as visited
                 visitedHash[currentHash] = true;
-                if (currentHash === goalHash) {
-                    // Unshift goal board
-                    result.visited.unshift(cur); 
-                    // Unshift until start is found
-                    while (cur = cur.parent) result.visited.unshift(cur); 
+                if (currentHash === goalHash) { 
+                    // Unshift from goal until start is found
+                    while (cur) {
+                        result.visited.unshift(cur);
+                        cur = cur.parent;
+                    }
                     // Calculate time taken for the algorithm
                     result.timeTaken = Date.now() - result.timeTaken;
                     return callback(result);

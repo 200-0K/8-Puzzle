@@ -9,6 +9,13 @@ export class ResultBuilder {
         this.algorithmBlocks = [];
     }
 
+    /**
+     * @param {String} algorithmName 
+     * @param {Number} maxDepth 
+     * @param {Number} timeTakenInms 
+     * @param {Number} totalMoves
+     * @returns {timelineBlock: HTMLElement, addMoveDetails: Function, addBoard: Function, addTimeLapse: Function, updateBlockAlgorithmTotalCost: Function}
+     */
     addAlgorithmBlock(algorithmName, maxDepth, timeTakenInms, totalMoves) {
         const algorithmBlock = document.createElement("section");
         algorithmBlock.classList.add("algorithm");
@@ -21,6 +28,11 @@ export class ResultBuilder {
                     </div>
 
                     <div class="${classNames.ALGORITHM_FIELD}">
+                        <p>Total Cost</p>
+                        <p><span class="dim-hover" id="t-1" title="Tiles Out of Place"></span> | <span class="dim-hover" id="t-2" title="&Sigma; Distances Out of Place"></span></p>
+                    </div>
+
+                    <div class="${classNames.ALGORITHM_FIELD}">
                         <p>Total Moves</p>
                         <p>${totalMoves}</p>
                     </div>
@@ -28,7 +40,7 @@ export class ResultBuilder {
 
                 <div class="${classNames.ALGORITHM_FIELD}" style="align-self: flex-end;">
                     <p>Time Taken</p>
-                    <p>${Math.floor((timeTakenInms/1000) * 10) / 10}<span title="Millisecond" class="unit dim-hover">sec</span></p>
+                    <p>${Math.floor((timeTakenInms/1000) * 10) / 10}<span class="unit dim-hover">sec</span></p>
                 </div>
             </div>
             <h2 class="${classNames.ALGORITHM_TITLE}">${algorithmName} Algorithm</h2>
@@ -74,6 +86,7 @@ export class ResultBuilder {
                     </div>
                 `);
             },
+
             /**
              * @param {Array} board 1DArray of size 9 that will be converted to HTML table and inserted into the time line
              */
@@ -82,6 +95,7 @@ export class ResultBuilder {
                 table.classList.add(`${classNames.SAMLL_TABLE}`);
                 this.timelineBlock.insertAdjacentElement("beforeend", table);
             }, 
+
             addTimeLapse: function(skippedNumber) {
                 this.timelineBlock.insertAdjacentHTML("beforeend", `
                 <div class="algorithm__line">
@@ -92,6 +106,11 @@ export class ResultBuilder {
                     </div>
                 </div> 
                 `);
+            },
+
+            updateBlockAlgorithmTotalCost: function(totalCost, totalDistance) {
+                algorithmBlock.querySelector("#t-1").innerText = totalCost;
+                algorithmBlock.querySelector("#t-2").innerText = totalDistance;
             }
         };
     }
