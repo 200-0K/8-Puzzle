@@ -9,7 +9,8 @@
     opacity: .8;
     transition: 
         transform 300ms ease, 
-        opacity 300ms ease-in-out
+        opacity 300ms ease-in-out,
+        filter 400ms ease-in
     ;
     
     &:active {

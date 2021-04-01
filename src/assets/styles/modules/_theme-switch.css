@@ -21,13 +21,9 @@
     }
 
     & .moon {
-        color: #adadad;
+        color: #fd0;
         stroke: #1f263b;
         filter: drop-shadow(0px 0px 18px rgba(255, 255, 255, 0.4));
-
-        &:hover {
-            color: #fff;
-        }
     }
 
     & .sun {

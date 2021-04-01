@@ -12,16 +12,17 @@ import { ResultBuilder } from "../../HTML";
 const swapDuration    = 200; // Duration in ms of swapping tiles
 const randomizerDelay = 100; // Delay in ms between swapping tiles
 
-const maxNumberOfResults = 50;
+let resultBuilder; // For solveCallBack method
+let solversCompleteNumber = 0; // Used to decide whether to show main container or not
 
 export default class EightPuzzleEvents {
     constructor(onChangeCallBack) {
         this.selectedCells = [];
 
-        // solvers are objects that can solve EightPuzzle, and it 
-        // contain a method called solve(startEightPuzzle) : Array(EightPuzzle) ~ Visited Eight puzzles
+        /** solvers are objects that can solve EightPuzzle, and it  contain a method called solve(startEightPuzzle) : Array(EightPuzzle) ~ Visited Eight puzzles */
         this.solvers = [
-            new BreadthFirst()
+            new BreadthFirst(),
+            new BestFirst()
         ]
 
         // Used when tiles are changed
@@ -106,41 +107,57 @@ export default class EightPuzzleEvents {
     solveEvent() {
         const currentEightPuzzle = EightPuzzle.getObjectFromHTML();
 
-        // Save current boards
-        localStorage.setItem("tiles", JSON.stringify(currentEightPuzzle.tiles));
-        localStorage.setItem("goal-tiles", JSON.stringify(currentEightPuzzle.goalTiles));
-
-        // Check if it solvable
+        // Check if boards are solvable
         if (!currentEightPuzzle.isSolvable()) {
             alert("Unsolvable Puzzle!");
             return;
         }
+
+        // Reset solvers
+        solversCompleteNumber = 0;
+        this.disableMainContainer();
+        // New result builder for this boards
+        resultBuilder = new ResultBuilder();
+
+        // Save current boards into local storage
+        localStorage.setItem("tiles", JSON.stringify(currentEightPuzzle.tiles));
+        localStorage.setItem("goal-tiles", JSON.stringify(currentEightPuzzle.goalTiles));
         
-        
-        const resultBuilder = new ResultBuilder();
+        // For each solvers call its solve method
         for(const solver of this.solvers) {
-            const solverResult              = solver.solve(currentEightPuzzle);
-            const totalDepth                = solverResult.visited.length;
-            let totalTilesOutPlaced         = 0;
-            let totalTilesOutPlacedDistance = 0;
-
-            const timeline = resultBuilder.addAlgorithmBlock(solverResult.algorithmName, totalDepth, solverResult.timeTaken, solverResult.totalMoves);
-
-            timeline.addBoard(solverResult.visited[0].tiles);
-
-            for (let i = 1; i < totalDepth; i++) {
-                const visited                = solverResult.visited[i];
-                const tilesOutPlaced         = visited.tilesOutPlaced;
-                const tilesOutPlacedDistance = visited.tilesOutPlacedDistance;
-                totalTilesOutPlaced         += tilesOutPlaced;
-                totalTilesOutPlacedDistance += tilesOutPlacedDistance;
-                
-                timeline.addMoveDetails(visited.direction, tilesOutPlaced, tilesOutPlacedDistance, totalTilesOutPlaced, totalTilesOutPlacedDistance, i+1);
-                timeline.addBoard(visited.tiles);
-            }
+            solver.solve(currentEightPuzzle, this.solveCallBack.bind(this));
         }
-        
+    }
+
+    // ************ CallBacks ************ //
+
+    /** 
+     * @param {{algorithmName: String, timeTaken: Number, totalMoves: Number, visited: [EightPuzzle]}} solverResult 
+     */
+    solveCallBack(solverResult) {
+        solversCompleteNumber++;
+
+        const totalDepth                = solverResult.visited.length;
+        let totalTilesOutPlaced         = 0;
+        let totalTilesOutPlacedDistance = 0;
+
+        const timeline = resultBuilder.addAlgorithmBlock(solverResult.algorithmName, totalDepth, solverResult.timeTaken, solverResult.totalMoves);
+
+        timeline.addBoard(solverResult.visited[0].tiles);
+
+        for (let i = 1; i < totalDepth; i++) {
+            const visited                = solverResult.visited[i];
+            const tilesOutPlaced         = visited.tilesOutPlaced;
+            const tilesOutPlacedDistance = visited.tilesOutPlacedDistance;
+            totalTilesOutPlaced         += tilesOutPlaced;
+            totalTilesOutPlacedDistance += tilesOutPlacedDistance;
+            
+            timeline.addMoveDetails(visited.direction, tilesOutPlaced, tilesOutPlacedDistance, totalTilesOutPlaced, totalTilesOutPlacedDistance, i+1);
+            timeline.addBoard(visited.tiles);
+        }
+
         this.showResult(resultBuilder);
+        this.smartEnableMainContainer();
     }
 
     // ************ Methods ************ //
@@ -183,6 +200,24 @@ export default class EightPuzzleEvents {
     showResult(resultBuilder) {
         document.querySelector(".result")?.remove();
         document.querySelector("main").insertAdjacentElement("afterend", resultBuilder.getResult());  
+    }
+
+    smartEnableMainContainer() {
+        if (solversCompleteNumber == this.solvers.length) this._enableMainContainer();
+    }
+
+    disableMainContainer() {
+        const mainContainer = document.querySelector(`.${classNames.MAIN_CONTAINER}`);
+        const loadingMessage = document.querySelector(`.${classNames.LOADING_MESSAGE}`);
+        mainContainer.classList.add("disabled", "disabled--animation");
+        loadingMessage.classList.remove("hidden");
+    }
+
+    _enableMainContainer() {
+        const mainContainer = document.querySelector(`.${classNames.MAIN_CONTAINER}`);
+        const loadingMessage = document.querySelector(`.${classNames.LOADING_MESSAGE}`);
+        mainContainer.className = classNames.MAIN_CONTAINER;
+        loadingMessage.classList.add("hidden");
     }
 
     // ************ Static ************ //

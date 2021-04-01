@@ -27,8 +27,8 @@ export class ResultBuilder {
                 </div>
 
                 <div class="${classNames.ALGORITHM_FIELD}" style="align-self: flex-end;">
-                    <p >Time Taken</p>
-                    <p>${Math.floor((timeTakenInms/1000) * 10) / 10}<span title="Millisecond" class="unit dim-hover">s</span></p>
+                    <p>Time Taken</p>
+                    <p>${Math.floor((timeTakenInms/1000) * 10) / 10}<span title="Millisecond" class="unit dim-hover">sec</span></p>
                 </div>
             </div>
             <h2 class="${classNames.ALGORITHM_TITLE}">${algorithmName} Algorithm</h2>

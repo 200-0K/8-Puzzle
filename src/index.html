@@ -8,91 +8,96 @@
 </head>
 
 <body class="dark">
+  <!-- <div class="test"></div>  -->
   <header class="header">
     <div class="header__logo">
       <div class="theme-switch">
         <span class="iconify moon switched" data-icon="bx-bxs-moon" data-inline="false"></span>
       </div>
-      <h1 class="dim">8-Puzzle Project</h1>
+      <h1 class="dim">8-Puzzle Solver</h1>
     </div>
     <nav class="header__nav">
-      <a href="#" class="nav__item">About</a>
+      <!-- <a href="#" class="nav__item">About</a> -->
     </nav>
   </header>
 
-  <main class="main-container">
-    <!-- Start Tiles -->
-    <div class="eight-puzzle">
-      <div class="eight-puzzle__title">
-        <p>Start</p>
+  <main style="position: relative;">
+    <div class="main-container">
+      <!-- Start Tiles -->
+      <div class="eight-puzzle">
+        <div class="eight-puzzle__title">
+          <p>Start</p>
+        </div>
+        <div class="eight-puzzle__board">
+          <div class="eight-puzzle__icon" title="Randomizer"><span class="iconify" data-icon="fa-solid:random"></span>
+          </div>
+          <table class="eight-puzzle__body start eight-puzzle__body--editable">
+            <tr>
+              <td class="eight-puzzle__cell">2</td>
+              <td class="eight-puzzle__cell">8</td>
+              <td class="eight-puzzle__cell">3</td>
+            </tr>
+            <tr>
+              <td class="eight-puzzle__cell">1</td>
+              <td class="eight-puzzle__cell">6</td>
+              <td class="eight-puzzle__cell">4</td>
+            </tr>
+            <tr>
+              <td class="eight-puzzle__cell eight-puzzle__cell--blank"></td>
+              <td class="eight-puzzle__cell">7</td>
+              <td class="eight-puzzle__cell">5</td>
+            </tr>
+          </table>
+        </div>
       </div>
 
-      <div class="eight-puzzle__board">
-        <div class="eight-puzzle__icon" title="Randomizer"><span class="iconify" data-icon="fa-solid:random"></span>
+      <!-- Details Box -->
+      <div class="info">
+        <div class="info__row">
+          <div class="info__field">Tiles Out of Place</div>
+          <div class="info__field numberOfTilesOutPlace">??</div>
         </div>
-        <table class="eight-puzzle__body start eight-puzzle__body--editable">
-          <tr>
-            <td class="eight-puzzle__cell">2</td>
-            <td class="eight-puzzle__cell">8</td>
-            <td class="eight-puzzle__cell">3</td>
-          </tr>
-          <tr>
-            <td class="eight-puzzle__cell">1</td>
-            <td class="eight-puzzle__cell">6</td>
-            <td class="eight-puzzle__cell">4</td>
-          </tr>
-          <tr>
-            <td class="eight-puzzle__cell eight-puzzle__cell--blank"></td>
-            <td class="eight-puzzle__cell">7</td>
-            <td class="eight-puzzle__cell">5</td>
-          </tr>
-        </table>
+        <div class="info__row">
+          <div class="info__field">&Sigma; Distances Out of Place</div>
+          <div class="info__field distanceOfTilesOutPlace">??</div>
+        </div>
+        <div class="info__row info__row--center">
+          <div class="info__field status"></div>
+        </div>
+        <button class="btn btn--big btn--black btn--round solve">Solve</button>
+      </div>
+
+      <!-- Goal Tiles -->
+      <div class="eight-puzzle">
+        <div class="eight-puzzle__title">
+          <p>Goal</p>
+        </div>
+
+        <div class="eight-puzzle__board">
+          <div class="eight-puzzle__icon" title="Randomizer"><span class="iconify" data-icon="fa-solid:random"></span>
+          </div>
+          <table class="eight-puzzle__body goal eight-puzzle__body--editable">
+            <tr>
+              <td class="eight-puzzle__cell">1</td>
+              <td class="eight-puzzle__cell">2</td>
+              <td class="eight-puzzle__cell">3</td>
+            </tr>
+            <tr>
+              <td class="eight-puzzle__cell">8</td>
+              <td class="eight-puzzle__cell eight-puzzle__cell--blank"></td>
+              <td class="eight-puzzle__cell">4</td>
+            </tr>
+            <tr>
+              <td class="eight-puzzle__cell">7</td>
+              <td class="eight-puzzle__cell">6</td>
+              <td class="eight-puzzle__cell">5</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-
-    <!-- Details Box -->
-    <div class="info">
-      <div class="info__row">
-        <div class="info__field">Tiles Out of Place</div>
-        <div class="info__field numberOfTilesOutPlace">??</div>
-      </div>
-      <div class="info__row">
-        <div class="info__field">&Sigma; Distances Out of Place</div>
-        <div class="info__field distanceOfTilesOutPlace">??</div>
-      </div>
-      <div class="info__row info__row--center">
-        <div class="info__field status"></div>
-      </div>
-      <button class="btn btn--big btn--black btn--round solve">Solve</button>
-    </div>
-
-    <!-- Goal Tiles -->
-    <div class="eight-puzzle">
-      <div class="eight-puzzle__title">
-        <p>Goal</p>
-      </div>
-
-      <div class="eight-puzzle__board">
-        <div class="eight-puzzle__icon" title="Randomizer"><span class="iconify" data-icon="fa-solid:random"></span>
-        </div>
-        <table class="eight-puzzle__body goal eight-puzzle__body--editable">
-          <tr>
-            <td class="eight-puzzle__cell">1</td>
-            <td class="eight-puzzle__cell">2</td>
-            <td class="eight-puzzle__cell">3</td>
-          </tr>
-          <tr>
-            <td class="eight-puzzle__cell">8</td>
-            <td class="eight-puzzle__cell eight-puzzle__cell--blank"></td>
-            <td class="eight-puzzle__cell">4</td>
-          </tr>
-          <tr>
-            <td class="eight-puzzle__cell">7</td>
-            <td class="eight-puzzle__cell">6</td>
-            <td class="eight-puzzle__cell">5</td>
-          </tr>
-        </table>
-      </div>
+    <div class="loading-message hidden">
+      <h1>Solving...</h1>
     </div>
   </main>
 </body>

@@ -28,7 +28,9 @@ export const classNames = {
     ALGORITHM_INFO_BOX: "algorithm__line__info-box",
 
 
-    FLEX_COLUMN: "flex-column"
+    MAIN_CONTAINER: "main-container",
+    LOADING_MESSAGE: "loading-message",
+
 };
 
 

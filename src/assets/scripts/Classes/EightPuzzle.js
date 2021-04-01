@@ -8,13 +8,14 @@ export default class EightPuzzle {
     /**
      *  @param {Array} tiles
      *  @param {Array} goalTiles
+     *  @param {Number} blankTilePosition
+     *  @param {String} direction
+     *  @param {EightPuzzle} parent
      */
     constructor(tiles, goalTiles, blankTilePosition, direction, parent) {
         this.tiles = tiles;
         this.goalTiles = goalTiles;
         this.blankTileIndex = blankTilePosition ?? tiles.findIndex(e => e == "0");
-        // this.tilesOutPlaced = this.getTilesOutPlaced();
-        // this.tilesOutPlacedDistance = this.getTilesOutPlacedDistance();
         this.direction = direction;
         this.parent = parent;
     }
@@ -103,21 +104,21 @@ export default class EightPuzzle {
 
     /** Get available moves for some tile position
      * @param {Array} tiles
-     * @param {Number} src Index of moving tile
+     * @param {Number} index Index of moving tile
      * @returns {[{direction, index}]}
      */
-    static availableMoves(tiles, src) {
+    static availableMoves(tiles, index) {
         const newMoves = [];
-        const horiz = (src+1) % 3;
+        const horiz = (index+1) % 3;
 
         // Up?
-        if (src - 3 >= 0) newMoves.push({direction: _direction.UP, index: src-3});
+        if (index - 3 >= 0) newMoves.push({direction: _direction.UP, index: index-3});
         // Down?
-        if (src + 3 < tiles.length) newMoves.push({direction: _direction.DOWN, index: src+3});
+        if (index + 3 < tiles.length) newMoves.push({direction: _direction.DOWN, index: index+3});
         // Left?
-        if (horiz == 0 || horiz == 2) newMoves.push({direction: _direction.LEFT, index: src-1});
+        if (horiz == 0 || horiz == 2) newMoves.push({direction: _direction.LEFT, index: index-1});
         // Right?
-        if (horiz == 1 || horiz == 2) newMoves.push({direction: _direction.RIGHT, index: src+1});
+        if (horiz == 1 || horiz == 2) newMoves.push({direction: _direction.RIGHT, index: index+1});
 
         return newMoves;
     }

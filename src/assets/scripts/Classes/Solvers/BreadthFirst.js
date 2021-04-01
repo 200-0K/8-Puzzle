@@ -1,12 +1,13 @@
 import EightPuzzle from "../EightPuzzle";
 
+const maxWorkPerTimeout = 200;
 
 export default class BreadthFirst {
     /**
      * @param {EightPuzzle} startEightPuzzle 
      * @return {{algorithmName: String, timeTaken: Number, totalMoves: Number, visited: [EightPuzzle]}}
      */
-    solve(startEightPuzzle) {
+    solve(startEightPuzzle, callback) {
         const result = {
             algorithmName: "Breadth First",
             timeTaken: Date.now(),
@@ -16,31 +17,48 @@ export default class BreadthFirst {
 
         const goalHash    = window.btoa(startEightPuzzle.goalTiles);
         const queue       = [startEightPuzzle];
-        const visitedHash = [];
+        const visitedHash = {};
+
         let cur;
-        while (cur = queue.shift()) {
-            const curHash = window.btoa(cur.tiles);
+        function work() {
+            if ( !(cur = queue.shift()) ) return;
 
-            result.totalMoves++;
-            visitedHash.push(curHash);
-            if (curHash === goalHash) {
-                result.visited.unshift(cur);
-                while(cur = cur.parent) result.visited.unshift(cur);
-                break;
+            // document.querySelector(".test").innerText = result.totalMoves; // !Debugging 
+
+            for (let i = 0; i < maxWorkPerTimeout && cur; i++) {
+                const curHash = window.btoa(cur.tiles);
+                result.totalMoves++;
+                
+                // Mark current as visited
+                visitedHash[curHash] = true;
+                if (curHash === goalHash) {
+                    // Unshift goal board
+                    result.visited.unshift(cur);
+                    // Unshift until start is found
+                    while(cur = cur.parent) result.visited.unshift(cur);
+                    // Calculate time taken for the algorithm
+                    result.timeTaken = Date.now() - result.timeTaken;
+                    return callback(result);
+                }
+    
+                // Available indexes for blank tile
+                const indxs = EightPuzzle.availableMoves(cur.tiles, cur.blankTileIndex);
+    
+                for(const {index, direction} of indxs) {
+                    const move = cur.move(index, direction);
+                    // Skip move if visited
+                    if (visitedHash[window.btoa(move.tiles)]) continue;
+                    queue.push(move);
+                }
+                
+                // Next element inside the queue if i didn't exceed maxWorkPerTimeout
+                if (i + 1 < maxWorkPerTimeout) cur = queue.shift();
             }
-
-            // Available indexes for blank tile
-            const indxs = EightPuzzle.availableMoves(cur.tiles, cur.blankTileIndex);
-
-            for(const {index, direction} of indxs) {
-                const move = cur.move(index, direction);
-                if (visitedHash[window.btoa(move)]) continue;
-                queue.push(move);
-            }
+            
+            setTimeout(work, 0.5);
         }
 
-        result.timeTaken = Date.now() - result.timeTaken;
-        return result;
+        work();
     }
 
     /** Get the shortest distance from src to dest

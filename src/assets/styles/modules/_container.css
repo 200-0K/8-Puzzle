@@ -3,6 +3,7 @@
     margin-top: 5rem;
     justify-content: center;
     align-items: center;
+    transition: filter 1s ease-in-out;
 
     &--in-between {
         display: flex;

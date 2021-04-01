@@ -1,0 +1,9 @@
+.loading-message {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--gray);
+}

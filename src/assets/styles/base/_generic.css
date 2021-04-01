@@ -1,5 +1,15 @@
 .disabled {
     pointer-events: none;
+    filter: blur(7px);
+
+    &--animation {
+        animation: disabledAnimation 2s ease infinite alternate-reverse;
+    }
+}
+
+@keyframes disabledAnimation {
+    from {filter: blur(10px)}
+    to {filter: blur(18px)}
 }
 
 .dim-hover {
@@ -19,4 +29,8 @@
 .flex-column {
     display: flex;
     flex-direction: column;
+}
+
+.hidden {
+    opacity: 0 !important;
 }

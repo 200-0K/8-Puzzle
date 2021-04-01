@@ -13,5 +13,4 @@ if (localStorage.getItem("tiles")) {
 
 new EightPuzzleEvents(() => updateMainDetails(EightPuzzle.getObjectFromHTML()));
 
-
 new ThemeSwitcher();
