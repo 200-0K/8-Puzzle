@@ -4,8 +4,8 @@
 
     &--animation {
         animation-name: disabledAnimation;
-        animation-delay: 2s;
-        animation-timing-function: ease-in-out;
+        animation-duration: 2s;
+        animation-timing-function: ease;
         animation-iteration-count: infinite;
         animation-direction: alternate-reverse;
     }

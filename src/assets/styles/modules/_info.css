@@ -2,15 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    align-self: flex-end;
-    margin: 0 2.68rem;
-    padding-bottom: 4.6vh;
+    margin: 5.6rem 2.68rem 0;
 
     &__row {
         display: grid;
         grid-template-columns: 1fr auto;
         justify-items: left;
-        align-items: center;
         width: 265px;
         max-width: 265px;
         margin-bottom: 1.4rem;

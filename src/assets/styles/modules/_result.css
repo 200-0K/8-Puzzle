@@ -15,7 +15,7 @@
         font-size: 2.5em;
         text-align: center;
         width: 25%;
-        border-bottom: 1px dashed var(--gray);
+        border-bottom: 6px dashed var(--gray);
         margin: 0 auto;
         margin-top: 3rem;
         padding-bottom: 1rem;
@@ -26,7 +26,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    margin: 2rem 10rem;
+    margin: 0 10rem 2rem;
 
     p {
         color: var(--gray);
@@ -35,6 +35,8 @@
 }
 
 .algorithm {
+    margin-top: 4rem;
+
     &__summary {
         display: flex;
         justify-content: space-between;
