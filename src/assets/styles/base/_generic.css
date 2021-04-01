@@ -3,7 +3,11 @@
     filter: blur(7px);
 
     &--animation {
-        animation: disabledAnimation 2s ease infinite alternate-reverse;
+        animation-name: disabledAnimation;
+        animation-delay: 2s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate-reverse;
     }
 }
 
