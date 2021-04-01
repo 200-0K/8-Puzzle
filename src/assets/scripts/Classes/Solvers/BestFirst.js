@@ -18,7 +18,7 @@ export default class BestFirst {
         };
 
         const goalHash      = window.btoa(startEightPuzzle.goalTiles);
-        const priorityQueue = new Heapify(250, [startEightPuzzle], [startEightPuzzle.tilesOutPlacedDistance], Array);
+        const priorityQueue = new Heapify(1400, [startEightPuzzle], [startEightPuzzle.tilesOutPlacedDistance], Array);
         const visitedHash   = {};
 
         let cur;
