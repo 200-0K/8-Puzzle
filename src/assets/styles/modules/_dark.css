@@ -5,8 +5,9 @@
     --dark--blank-tile-color: var(--primary-green);
 }
 
-body.dark {
+html.dark {
     background-color: var(--dark--body-color);
+    color-scheme: dark;
 
     .header {
         &__logo h1 {

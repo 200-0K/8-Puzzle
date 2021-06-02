@@ -11,14 +11,13 @@ export default class ThemeSwitcher {
     }
 
     event() {
-        // class .theme-switch == theme switcher
         document.querySelector(".theme-switch").addEventListener("click", this.toggle.bind(this));
     }   
 
     toggle() {
         const iconContainer = document.querySelector(".theme-switch");
         const oldIcon = document.querySelector(".theme-switch .iconify");
-        const newIcon = (document.body.classList.contains("dark")) ? this.getLightThemeIcon() : this.getDarkThemeIcon();
+        const newIcon = (document.documentElement.classList.contains("dark")) ? this.getLightThemeIcon() : this.getDarkThemeIcon();
 
         // Pause wave animation
         iconContainer.style["animation-play-state"] = "paused";
@@ -28,7 +27,7 @@ export default class ThemeSwitcher {
             // Replace the icon while it's hidden
             oldIcon.replaceWith(newIcon);
             // Remove dark class if it's there, or add it if it's not
-            document.body.classList.toggle("dark");
+            document.documentElement.classList.toggle("dark");
 
             iconContainer.classList.remove("switching");
             // Play wave animation again
