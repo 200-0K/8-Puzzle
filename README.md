@@ -1,5 +1,5 @@
 # 8-Puzzle Solver - Project
-[A working web app can be found here](https://200-0k.github.io/8-Puzzle/).
+[A working webapp can be found here](https://200-0k.github.io/8-Puzzle/).
 
 A web app that can solve 8-puzzle with two search algorithms
 - **Breadth First Algorithm**
