@@ -11,3 +11,5 @@ This web app will show a step by step solution for a given 8-puzzle, along with 
 For **Best First** algorithm, it uses tiles out of place distance as heuristic function to determine next move.
 
 
+
+
